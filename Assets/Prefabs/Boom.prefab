@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6600083199071881651}
   - component: {fileID: 6465088050544771746}
   - component: {fileID: 900598389783066843}
+  - component: {fileID: 5544577988530983737}
   m_Layer: 0
   m_Name: Boom
   m_TagString: Untagged
@@ -4895,3 +4896,17 @@ ParticleSystemRenderer:
   m_MeshWeighting1: 1
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
+--- !u!114 &5544577988530983737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5255483419550342652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abb8fe347158444b694b4bee819fc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Explosion
+  explosionRadius: 2
+  shockwavePrefab: {fileID: 5009158845474427670, guid: 9c4dd85a545013145a7558ec3b0a04d3, type: 3}

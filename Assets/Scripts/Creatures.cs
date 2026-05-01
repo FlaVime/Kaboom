@@ -11,6 +11,7 @@ public class Creatures : MonoBehaviour
 
     private string[] faces = { "^_^", ">_<", "o_O", "•_•", "T_T", "._.", "^o^", "0_0", "x_x" };
     private Color[] colors = { Color.red, Color.green, Color.blue, Color.yellow, Color.cyan, Color.magenta };
+    public Color BodyColor => body.color;
 
     private Rigidbody2D rb;
 
@@ -29,5 +30,11 @@ public class Creatures : MonoBehaviour
     void OnDestroy()
     {
         CreatureSpawner.Instance?.OnCreatureDestroyed();
+    }
+
+    public void ExplodeFromChain()
+    {
+        ExplosionManager.Instance.SpawnExplosion(transform.position, BodyColor);
+        Destroy(gameObject);
     }
 }
