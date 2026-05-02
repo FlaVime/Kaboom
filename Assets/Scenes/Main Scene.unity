@@ -129,8 +129,6 @@ GameObject:
   m_Component:
   - component: {fileID: 216979421}
   - component: {fileID: 216979424}
-  - component: {fileID: 216979422}
-  - component: {fileID: 216979423}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -147,41 +145,12 @@ Transform:
   m_GameObject: {fileID: 216979419}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.87295, y: 2.21827, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 713845515}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &216979422
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 216979419}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17fd357b7544bd540b3c1930159aaa3f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BoundsCreator
-  bounceMaterial: {fileID: 6200000, guid: 988160dbd144c8743a67782089190ed9, type: 2}
---- !u!114 &216979423
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 216979419}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e06dbf0125d738349aa3714fe9ccaf35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CreatureSpawner
-  creaturePrefab: {fileID: 1542487662792804562, guid: 7ac271b7f165b384c802816f9793b870, type: 3}
-  initialCount: 10
-  maxCount: 10
-  spawnInterval: 1
 --- !u!114 &216979424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,6 +165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   shakeMagnitude: 0.3
   shakeDuration: 0.2
+  bounceMaterial: {fileID: 6200000, guid: 988160dbd144c8743a67782089190ed9, type: 2}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -296,9 +266,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.0017849174
-    width: 0.99999994
-    height: 0.9959839
+    y: 0
+    width: 1
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
@@ -684,6 +654,7 @@ Transform:
   m_Children:
   - {fileID: 216979421}
   - {fileID: 790505424}
+  - {fileID: 1166449700}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &790505423
@@ -731,6 +702,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExplosionManager
   explosionPrefab: {fileID: 5255483419550342652, guid: 73c4decbf201a244098cf5a61e88f81f, type: 3}
+  shockwavePrefab: {fileID: 5009158845474427670, guid: 9c4dd85a545013145a7558ec3b0a04d3, type: 3}
+  explosionRadius: 2
   chainDepth: 3
 --- !u!1 &1041956830
 GameObject:
@@ -777,6 +750,54 @@ Transform:
   - {fileID: 697726082}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1166449699
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1166449700}
+  - component: {fileID: 1166449701}
+  m_Layer: 0
+  m_Name: CreatureSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1166449700
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1166449699}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 713845515}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1166449701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1166449699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e06dbf0125d738349aa3714fe9ccaf35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CreatureSpawner
+  creaturePrefab: {fileID: 1542487662792804562, guid: 7ac271b7f165b384c802816f9793b870, type: 3}
+  initialCount: 10
+  maxCount: 10
+  spawnInterval: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

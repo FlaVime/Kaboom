@@ -9,8 +9,8 @@ public class Creatures : MonoBehaviour
 
     [SerializeField] private float moveSpeed = 2f;
 
-    private string[] faces = { "^_^", ">_<", "o_O", "•_•", "T_T", "._.", "^o^", "0_0", "x_x" };
-    private Color[] colors = { Color.red, Color.green, Color.blue, Color.yellow, Color.cyan, Color.magenta };
+    private static readonly string[] faces = { "^_^", ">_<", "o_O", "•_•", "T_T", "._.", "^o^", "0_0", "x_x" };
+    private static readonly Color[] colors = { Color.red, Color.green, Color.blue, Color.yellow, Color.cyan, Color.magenta };
     public Color BodyColor => body.color;
 
     private Rigidbody2D rb;

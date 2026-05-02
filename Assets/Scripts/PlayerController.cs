@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
             Vector2 mousePos = cam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-            ExplosionManager.Instance.SpawnExplosion(mousePos, Color.white);
+            ExplosionManager.Instance.SpawnShockwave(mousePos);
         }
     }
 }
