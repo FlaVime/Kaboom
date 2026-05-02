@@ -1,14 +1,17 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
 {
-    [SerializeField] private float comboMaxTime = 5f;
+    [SerializeField] private float comboMaxTime = 10f;
     [SerializeField] private float killTimeBonus = 0.5f;
-    [SerializeField] private float baseDecayRate = 1f;
+    [SerializeField] private float baseDecayRate = 0.15f;
     [SerializeField] private int pointsPerKill = 10;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI comboText;
+    [SerializeField] private Image comboBarBG;
+    [SerializeField] private Image comboSlider;
 
     private int score = 0;
     private int combo = 1;
@@ -44,9 +47,9 @@ public class ScoreManager : MonoBehaviour
             {
                 combo = 1;
                 comboTimer = 0f;
-                UpdateUI();
             }
         }
+        UpdateUI();
     }
 
     public void AddScore()
@@ -54,13 +57,12 @@ public class ScoreManager : MonoBehaviour
         score += pointsPerKill * combo;
         combo++;
 
-        comboTimer -= killTimeBonus;
-        comboTimer = Mathf.Max(comboTimer, 1f);
-
         if (combo == 2)
-        {
             comboTimer = comboMaxTime;
-        }
+        else
+            comboTimer += killTimeBonus;
+
+        comboTimer = Mathf.Min(comboTimer, comboMaxTime);
 
         UpdateUI();
     }
@@ -68,7 +70,10 @@ public class ScoreManager : MonoBehaviour
     void UpdateUI()
     {
         scoreText.text = $"Score: {score}";
-        comboText.text = combo > 1 ? $"Combo x{combo}" : "";
+        bool hasCombo = combo > 1;
+        comboBarBG.gameObject.SetActive(hasCombo);
+        comboSlider.fillAmount = hasCombo ? comboTimer / comboMaxTime : 0f;
+        comboText.text = hasCombo ? $"Combo x{combo}" : "";
     }
 
 }
