@@ -34,6 +34,7 @@ public class Creatures : MonoBehaviour
 
     public void ExplodeFromChain()
     {
+        ScoreManager.Instance.AddScore();
         ExplosionManager.Instance.SpawnExplosion(transform.position, BodyColor);
         Destroy(gameObject);
     }
