@@ -1,12 +1,9 @@
-using System.Collections;
 using UnityEngine;
 
 public class ExplosionManager : MonoBehaviour
 {
     [SerializeField] private GameObject explosionPrefab;
     [SerializeField] private GameObject shockwavePrefab;
-    [SerializeField] private float explosionRadius = 2f;
-    [SerializeField] private int chainDepth = 3;
 
     public static ExplosionManager Instance { get; private set; }
 
@@ -31,9 +28,6 @@ public class ExplosionManager : MonoBehaviour
 
         // Trigger camera shake
         GameManager.Instance.TriggerCameraShake();
-
-        // Chain explosion logic
-        StartCoroutine(ChainExplosion(position, chainDepth));
     }
 
     public void SpawnExplosion(Vector2 position, Color color)
@@ -50,25 +44,5 @@ public class ExplosionManager : MonoBehaviour
 
         // Trigger camera shake
         GameManager.Instance.TriggerCameraShake();
-
-        // Chain explosion logic
-        StartCoroutine(ChainExplosion(position, chainDepth));
-    }
-
-    private IEnumerator ChainExplosion(Vector2 position, int depth)
-    {
-        if (depth <= 0) yield break;
-        yield return new WaitForSeconds(0.15f);
-        Collider2D[] hits = Physics2D.OverlapCircleAll(position, explosionRadius);
-
-        foreach (var hit in hits)
-        {
-            Creatures creature = hit.GetComponent<Creatures>();
-            if (creature != null)
-            {
-                creature.ExplodeFromChain();
-            }
-        }
-
     }
 }

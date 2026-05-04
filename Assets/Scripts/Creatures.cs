@@ -15,6 +15,11 @@ public class Creatures : MonoBehaviour
 
     private Rigidbody2D rb;
 
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+
     void Start()
     {
         // Randomly assign shape, color, and face
@@ -22,9 +27,11 @@ public class Creatures : MonoBehaviour
         body.color = colors[Random.Range(0, colors.Length)];
         face.text = faces[Random.Range(0, faces.Length)];
         face.color = Color.black;
+    }
 
-        rb = GetComponent<Rigidbody2D>();
-        rb.linearVelocity = Random.insideUnitCircle.normalized * moveSpeed; // random initial velocity
+    public void Init(Vector2 direction)
+    {
+        rb.linearVelocity = direction * moveSpeed;
     }
 
     void OnDestroy()

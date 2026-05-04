@@ -1,9 +1,11 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Shockwave : MonoBehaviour
 {
     private LineRenderer lr;
     private float currentRadius = 0f;
+    private HashSet<Creatures> exploded = new HashSet<Creatures>();
 
     [SerializeField] private float maxRadius = 3f;
     [SerializeField] private float expandSpeed = 8f;
@@ -21,10 +23,25 @@ public class Shockwave : MonoBehaviour
     {
         currentRadius += expandSpeed * Time.deltaTime;
         DrawWave();
+        CheckCollisions();
 
         if (currentRadius >= maxRadius)
         {
             Destroy(gameObject);
+        }
+    }
+
+    void CheckCollisions()
+    {
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, currentRadius);
+        foreach (var hit in hits)
+        {
+            Creatures creature = hit.GetComponent<Creatures>();
+            if (creature != null && !exploded.Contains(creature))
+            {
+                exploded.Add(creature);
+                creature.ExplodeFromChain();
+            }
         }
     }
 

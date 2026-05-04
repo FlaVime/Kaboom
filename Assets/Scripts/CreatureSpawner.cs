@@ -37,15 +37,30 @@ public class CreatureSpawner : MonoBehaviour
 
     void SpawnCreature()
     {
-        Vector2 min = Camera.main.ViewportToWorldPoint(new Vector2(0.1f, 0.1f));
-        Vector2 max = Camera.main.ViewportToWorldPoint(new Vector2(0.9f, 0.9f));
+        // Spawn just outside the screen on a random side
+        Vector2 leftSide = Camera.main.ViewportToWorldPoint(new Vector2(0.05f, Random.Range(0.1f, 0.9f)));
+        Vector2 rightSide = Camera.main.ViewportToWorldPoint(new Vector2(0.95f, Random.Range(0.1f, 0.9f)));
+        Vector2 topSide = Camera.main.ViewportToWorldPoint(new Vector2(Random.Range(0.1f, 0.9f), 0.95f));
+        Vector2 bottomSide = Camera.main.ViewportToWorldPoint(new Vector2(Random.Range(0.1f, 0.9f), 0.05f));
 
-        Vector2 randomPos = new Vector2(
-            Random.Range(min.x, max.x),
-            Random.Range(min.y, max.y)
-        );
+        int side = Random.Range(0, 4);
+        Vector2 randomPos;
 
-        Instantiate(creaturePrefab, randomPos, Quaternion.identity);
+        switch (side)
+        {
+            case 0: randomPos = leftSide; break;
+            case 1: randomPos = rightSide; break;
+            case 2: randomPos = topSide; break;
+            default: randomPos = bottomSide; break;
+        }
+
+        // Set initial velocity towards center
+        GameObject obj = Instantiate(creaturePrefab, randomPos, Quaternion.identity);
+        Vector2 center = Camera.main.ViewportToWorldPoint(new Vector2(
+            Random.Range(0.3f, 0.7f),
+            Random.Range(0.3f, 0.7f)));
+        Vector2 direction = ((Vector2)center - randomPos).normalized;
+        obj.GetComponent<Creatures>().Init(direction);
         currentCount++;
     }
 
