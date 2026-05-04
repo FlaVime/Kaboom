@@ -39,10 +39,23 @@ public class Creatures : MonoBehaviour
         CreatureSpawner.Instance?.OnCreatureDestroyed();
     }
 
+    public void SliceKill()
+    {
+        ScoreManager.Instance.AddScore();
+        ExplosionManager.Instance.SpawnSlice(transform.position, BodyColor);
+        Destroy(gameObject);
+    }
+
     public void ExplodeFromChain()
     {
         ScoreManager.Instance.AddScore();
         ExplosionManager.Instance.SpawnExplosion(transform.position, BodyColor);
         Destroy(gameObject);
+    }
+
+    public void IncreaseSpeed(float amount)
+    {
+        moveSpeed = Mathf.Min(moveSpeed + amount, 10f);
+        rb.linearVelocity = rb.linearVelocity.normalized * moveSpeed;
     }
 }

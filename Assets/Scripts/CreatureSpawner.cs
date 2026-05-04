@@ -3,12 +3,15 @@ using UnityEngine;
 public class CreatureSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject creaturePrefab;
-    [SerializeField] private int initialCount = 10;
-    [SerializeField] private int maxCount = 10;
-    [SerializeField] private float spawnInterval = 1f;
+    [SerializeField] private int initialCount = 5;
+    [SerializeField] private int maxCount = 5;
+    [SerializeField] private float spawnInterval = 1.5f;
+    [SerializeField] private int killsPerWave = 15;
 
     private float spawnTimer = 0f;
     private int currentCount = 0;
+    private int waveCount = 0;
+    private int killCount = 0;
 
     public static CreatureSpawner Instance;
 
@@ -37,7 +40,6 @@ public class CreatureSpawner : MonoBehaviour
 
     void SpawnCreature()
     {
-        // Spawn just outside the screen on a random side
         Vector2 leftSide = Camera.main.ViewportToWorldPoint(new Vector2(0.05f, Random.Range(0.1f, 0.9f)));
         Vector2 rightSide = Camera.main.ViewportToWorldPoint(new Vector2(0.95f, Random.Range(0.1f, 0.9f)));
         Vector2 topSide = Camera.main.ViewportToWorldPoint(new Vector2(Random.Range(0.1f, 0.9f), 0.95f));
@@ -54,7 +56,6 @@ public class CreatureSpawner : MonoBehaviour
             default: randomPos = bottomSide; break;
         }
 
-        // Set initial velocity towards center
         GameObject obj = Instantiate(creaturePrefab, randomPos, Quaternion.identity);
         Vector2 center = Camera.main.ViewportToWorldPoint(new Vector2(
             Random.Range(0.3f, 0.7f),
@@ -67,5 +68,27 @@ public class CreatureSpawner : MonoBehaviour
     public void OnCreatureDestroyed()
     {
         currentCount--;
+        killCount++;
+
+        if (killCount >= killsPerWave)
+        {
+            killCount = 0;
+            NextWave();
+        }
+    }
+
+    void NextWave()
+    {
+        waveCount++;
+        maxCount = Mathf.Min(maxCount + 2, 30);
+        spawnInterval = Mathf.Max(0.2f, spawnInterval - 0.1f);
+
+        Creatures[] alive = FindObjectsByType<Creatures>(FindObjectsSortMode.None);
+        foreach (var creature in alive)
+        {
+            creature.IncreaseSpeed(0.7f);
+        }
+
+        Debug.Log($"Wave {waveCount} started! Max: {maxCount}, Interval: {spawnInterval}");
     }
 }

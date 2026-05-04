@@ -45,4 +45,10 @@ public class ExplosionManager : MonoBehaviour
         // Trigger camera shake
         GameManager.Instance.TriggerCameraShake();
     }
+
+    public void SpawnSlice(Vector2 position, Color color)
+    {
+        GameObject boom = Instantiate(explosionPrefab, position, Quaternion.identity);
+        boom.GetComponent<Explosion>().Init(color);
+    }
 }
